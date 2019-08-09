@@ -13,7 +13,7 @@ function parallel() {
         data.allUsers.push(myJson);
         render();
       }).catch(function (err) {
-        console.log('Fetch Error :-S', err);
+        alert('Fetch Error :-S', err);
       });
   }
 }
@@ -33,12 +33,11 @@ function sequence() {
     })
     .then(function (myJson) {
       data.allUsers.push(myJson);
-    }).then(function(){
-      timeoutPromise();
     })
-    .then(function () {
-      return fetch('https://jsonplaceholder.typicode.com/todos/3');
-    }).then(function (response) {
+    .then(Promise.race([fetch('https://jsonplaceholder.typicode.com/todos/3'),
+    new Promise(function (resolve, reject) {
+       setTimeout(function(){ new Error('request timeout')}, 500)
+    })])).then(function (response) {
       return response.json();
     })
     .then(function (myJson) {
@@ -46,25 +45,13 @@ function sequence() {
       render();
     }).catch(function (err) {
       console.log('Fetch Error :-S', err);
+      render();
     });
 }
-
-function timeoutPromise() {
-  function delayPromise() {
-    return fetch('https://jsonplaceholder.typicode.com/todos/3')
-  }
-
-  setTimeout(function(){
-    delayPromise()
-  },5000);
-}
-
 
 function render() {
   var myTemplate = $('#forRendering-template');
   var html = myTemplate.render(data);
   $('#showTable').html(html);
 }
-
-
 
