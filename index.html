@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="https://www.jsviews.com/download/jsviews.min.js"></script>
+  <link href="https://www.jsviews.com/samples/samples.css" rel="stylesheet" />
+</head>
+
+<body>
+    <button id="sequence">Sequence</button>
+    <button id="parallel">parallel</button>
+  <div id="showTable"></div>
+  <script id="forRendering-template"  type="text/x-jsrender">
+      <table>
+        <thead>
+          <tr>
+            <td>Id</td>
+            <td>title</td>
+            <td>completed</td>
+          </tr>
+        </thead>
+        <tbody>
+          {{for allUsers}}
+          <tr>
+            <td>{{:id}}</td>
+            <td>{{:title}}</td>
+            <td>{{:completed}}</td>
+          </tr>
+          {{/for}}
+        </tbody>
+      </table>
+  </script>
+
+
+  <script src="index.js"></script>
+</body>
+
+</html>
